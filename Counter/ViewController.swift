@@ -16,15 +16,21 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         counterLabel.text = "\(counter)"
+        counterLabel.textAlignment = .center
+        counterLabel.font = .systemFont(ofSize: 70)
         // Do any additional setup after loading the view.
     }
     
     @IBAction func buttonDidTap(_ sender: Any) {
         counter += 1
-        counterLabel.text = "\(counter)"
+        if counter >= 100_000 {
+//            var format = String(counter).count - 4
+            counterLabel.text = String(format: "%.2E", Double(counter))
+        } else {
+            counterLabel.text = "\(counter)"
+        }
+        
     }
     
-    
 }
-
 
