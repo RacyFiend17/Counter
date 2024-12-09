@@ -71,7 +71,6 @@ class ViewController: UIViewController {
         }
         infoTextView.text += "\n [\(currentDateAndTime)]: значение изменено на +1"
         scrollToBottom()
-        print(currentDateAndTime)
     }
     
     
@@ -88,7 +87,7 @@ class ViewController: UIViewController {
             infoTextView.text += "\n [\(currentDateAndTime)]: попытка уменьшить значение счётчика ниже 0"
             counter += 0
         }
-        scrollToBottom() 
+        scrollToBottom()
     }
 }
 
