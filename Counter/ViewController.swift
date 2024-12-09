@@ -18,11 +18,11 @@ class ViewController: UIViewController {
         return dateFormatter.string(from: dateNow)
     }
     
-    @IBOutlet weak var counterLabel: UILabel!
-    @IBOutlet weak var makeZeroButton: UIButton!
-    @IBOutlet weak var decreaseButton: UIButton!
-    @IBOutlet weak var increaseButton: UIButton!
-    @IBOutlet weak var infoTextView: UITextView!
+    @IBOutlet weak private var counterLabel: UILabel!
+    @IBOutlet weak private var makeZeroButton: UIButton!
+    @IBOutlet weak private var decreaseButton: UIButton!
+    @IBOutlet weak private var increaseButton: UIButton!
+    @IBOutlet weak private var infoTextView: UITextView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -45,17 +45,24 @@ class ViewController: UIViewController {
         decreaseButton.backgroundColor = .blue
         increaseButton.tintColor = .white
         increaseButton.backgroundColor = .red
-        
     }
     
-    @IBAction func zeroButtonDidTap(_ sender: Any) {
+    private func scrollToBottom() {
+        // Проверяем, что текст не пустой
+        if infoTextView.text.isEmpty { return }
+        let range = NSRange(location: infoTextView.text.count - 1, length: 1)
+        infoTextView.scrollRangeToVisible(range)
+    }
+    
+    @IBAction private func zeroButtonDidTap(_ sender: Any) {
         counter = 0
         counterLabel.text = "\(counter)"
         infoTextView.text += "\n [\(currentDateAndTime)]: значение сброшено"
+        scrollToBottom()
     }
     
     
-    @IBAction func increaseButtonDidTap(_ sender: Any) {
+    @IBAction private func increaseButtonDidTap(_ sender: Any) {
         counter += 1
         if counter >= 100_000 {
             counterLabel.text = String(format: "%.2E", Double(counter))
@@ -63,11 +70,12 @@ class ViewController: UIViewController {
             counterLabel.text = "\(counter)"
         }
         infoTextView.text += "\n [\(currentDateAndTime)]: значение изменено на +1"
+        scrollToBottom()
         print(currentDateAndTime)
     }
     
     
-    @IBAction func decreaseButtonDidTap(_ sender: Any) {
+    @IBAction private func decreaseButtonDidTap(_ sender: Any) {
         if counter > 0 {
             infoTextView.text += "\n [\(currentDateAndTime)]: значение изменено на -1"
             counter -= 1
@@ -80,7 +88,7 @@ class ViewController: UIViewController {
             infoTextView.text += "\n [\(currentDateAndTime)]: попытка уменьшить значение счётчика ниже 0"
             counter += 0
         }
-       
+        scrollToBottom() 
     }
 }
 
